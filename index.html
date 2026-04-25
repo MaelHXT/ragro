@@ -288,21 +288,21 @@
 </div>
 
 <script>
-  // ======================== CONFIGURAÇÃO DO WHATSAPP ========================
-  // ALTERE AQUI PARA O NÚMERO DO ESTAGIÁRIO (código país + DDD + número, apenas dígitos)
-  const NUMERO_ESTAGIARIO = "5519997267309";  // Exemplo Brasil: 55 19 999999999 → "5519999999999"
+  // ======================== CONFIGURACAO DO WHATSAPP ========================
+  // ALTERE AQUI PARA O NUMERO DO ESTAGIARIO (codigo pais + DDD + numero, apenas digitos)
+  const NUMERO_ESTAGIARIO = "5519997267309";
 
-  // ======================== LISTA DE TIPOS DE CHAMADO (10 itens) ========================
+  // ======================== LISTA DE TIPOS DE CHAMADO ========================
   const tiposChamado = [
     "Fechamento de Ordem de Corte",
-    "Alteração Ocupação",
-    "Alteração Tipo de Propriedade",
-    "Área de Danos",
-    "Ativar/Inativar Talhão",
-    "Danos Talhão Permanente",
+    "Alteracao Ocupacao",
+    "Alteracao Tipo de Propriedade",
+    "Area de Danos",
+    "Ativar/Inativar Talhao",
+    "Danos Talhao Permanente",
     "Informar Data de Reforma",
-    "Reversão de Ordem de Corte",
-    "Pós Plantio",
+    "Reversao de Ordem de Corte",
+    "Pos Plantio",
     "Plantio"
   ];
 
@@ -348,80 +348,76 @@
     if(loader) loader.remove();
   }
 
-  // validação campos obrigatórios: verifica se ao menos os principais com valor vazio
   function validateRequiredFields() {
     const allInputs = document.querySelectorAll('#formFieldsArea input, #formFieldsArea select, #formFieldsArea textarea');
-    const emptyFields = Array.from(allInputs).filter(field => field.value.trim() === "" && field.hasAttribute('required') === false);
-    // vamos deixar flexível: alerta apenas se os 3 primeiros campos de texto estiverem vazios? melhor alerta genérico mas não bloqueia totalmente.
     const criticalEmpty = Array.from(allInputs).filter(f => f.value.trim() === "" && f.type !== "button");
     if(criticalEmpty.length > 3) {
-      if(!confirm("Atenção: vários campos estão vazios. Deseja enviar mesmo assim?")) return false;
+      if(!confirm("Atencao: varios campos estao vazios. Deseja enviar mesmo assim?")) return false;
     }
     return true;
   }
 
-  // ========== MONTAGEM DE FORMULÁRIOS POR TIPO ==========
+  // ========== MONTAGEM DE FORMULARIOS POR TIPO ==========
   function getFormHtmlByType(type) {
     switch(type) {
       case "Fechamento de Ordem de Corte":
         return `
           <div class="form-group"><label>Unidade de moagem de cana</label><input id="unidadeMoagem" placeholder="Ex: Usina Agrocenter"></div>
           <div class="row-2"><div class="form-group"><label>Fechar ordem</label><select id="fecharOrdem"><option>MUDA</option><option>MOAGEM</option></select></div><div class="form-group"><label>Nº ordem corte</label><input id="numOrdemCorte"></div></div>
-          <div class="form-group"><label>Código de fundo</label><input id="codFundo"></div>
-          <div class="row-2"><div class="form-group"><label>Nº zona</label><input id="zonaFechamento"></div><div class="form-group"><label>Talhão</label><input id="talhaoFechamento"></div></div>
-          <div class="form-group"><label>Fechamento manual</label><select id="fechamentoManual"><option>Sim</option><option>Não</option></select></div>
+          <div class="form-group"><label>Codigo de fundo</label><input id="codFundo"></div>
+          <div class="row-2"><div class="form-group"><label>Nº zona</label><input id="zonaFechamento"></div><div class="form-group"><label>Talhao</label><input id="talhaoFechamento"></div></div>
+          <div class="form-group"><label>Fechamento manual</label><select id="fechamentoManual"><option>Sim</option><option>Nao</option></select></div>
           <div class="form-group"><label>Tipo de estimativa</label><select id="tipoEstimativa"><option>Colheita</option><option>Muda</option></select></div>
-          <div class="form-group"><label>Observações</label><textarea id="obsEstimativaGeral" rows="2"></textarea></div>
+          <div class="form-group"><label>Observacoes</label><textarea id="obsEstimativaGeral" rows="2"></textarea></div>
         `;
-      case "Alteração Ocupação":
+      case "Alteracao Ocupacao":
         return `<div class="row-2"><div class="form-group"><label>Fazenda</label><input id="fazendaOcup"></div><div class="form-group"><label>Zona</label><input id="zonaOcup"></div></div>
-                <div class="form-group"><label>Talhão</label><input id="talhaoOcup"></div>
-                <div class="form-group"><label>Tipo de ocupação</label><select id="tipoOcupacao"><option>Devolução</option><option>Devolução (Subarrendamento Longo Prazo)</option><option>Repasse</option></select></div>`;
-      case "Alteração Tipo de Propriedade":
-        return `<div class="row-2"><div><label>Código fazenda</label><input id="codFazendaProp"></div><div><label>Zona</label><input id="zonaProp"></div></div>
-                <div><label>Talhão</label><input id="talhaoProp"></div><div class="row-2"><div><label>Variedade</label><input id="variedadeProp"></div><div><label>Estágio</label><input id="estagioProp"></div></div>
-                <div><label>Tipo da propriedade</label><input id="tipoPropriedade" placeholder="Ex: Arrendada"></div><div><label>Módulo Administrativo</label><input id="moduloAdm"></div>
-                <div><label>Distância usina-fazenda (km)</label><input type="number" id="distanciaKm"></div><div><label>Ocupação anterior</label><input id="ocupacaoAnterior"></div>
-                <div class="row-2"><div><label>Espaçamento</label><input id="espacamentoProp"></div><div><label>Ciclo desenvolvimento</label><input id="cicloDesenv"></div></div>
-                <div><label>Novo tipo de propriedade</label><input id="novoTipoProp"></div><div class="row-2"><div><label>Ambiente produção</label><input id="ambienteProducao"></div><div><label>Ambiente manejo</label><input id="ambienteManejo"></div></div>
+                <div class="form-group"><label>Talhao</label><input id="talhaoOcup"></div>
+                <div class="form-group"><label>Tipo de ocupacao</label><select id="tipoOcupacao"><option>Devolucao</option><option>Devolucao (Subarrendamento Longo Prazo)</option><option>Repasse</option></select></div>`;
+      case "Alteracao Tipo de Propriedade":
+        return `<div class="row-2"><div><label>Codigo fazenda</label><input id="codFazendaProp"></div><div><label>Zona</label><input id="zonaProp"></div></div>
+                <div><label>Talhao</label><input id="talhaoProp"></div><div class="row-2"><div><label>Variedade</label><input id="variedadeProp"></div><div><label>Estagio</label><input id="estagioProp"></div></div>
+                <div><label>Tipo da propriedade</label><input id="tipoPropriedade" placeholder="Ex: Arrendada"></div><div><label>Modulo Administrativo</label><input id="moduloAdm"></div>
+                <div><label>Distancia usina-fazenda (km)</label><input type="number" id="distanciaKm"></div><div><label>Ocupacao anterior</label><input id="ocupacaoAnterior"></div>
+                <div class="row-2"><div><label>Espacamento</label><input id="espacamentoProp"></div><div><label>Ciclo desenvolvimento</label><input id="cicloDesenv"></div></div>
+                <div><label>Novo tipo de propriedade</label><input id="novoTipoProp"></div><div class="row-2"><div><label>Ambiente producao</label><input id="ambienteProducao"></div><div><label>Ambiente manejo</label><input id="ambienteManejo"></div></div>
                 <div><label>Frente</label><input id="frentePropriedade"></div>`;
-      case "Área de Danos":
-        return `<div><label>Código Fundo Agrícola</label><input id="fundoDanos"></div><div><label>Zona</label><input id="zonaDanos"></div>
-                <div><label>Talhão</label><input id="talhaoDanos"></div><div><label>Tipo de danos</label><textarea rows="2" id="tipoDanosDesc"></textarea></div>`;
-      case "Ativar/Inativar Talhão":
-        return `<div class="row-2"><div><label>Código Fazenda</label><input id="codFazendaAtivar"></div><div><label>Zona</label><input id="zonaAtivar"></div></div>
-                <div><label>Talhão</label><input id="talhaoAtivar"></div><div><label>Área (ha)</label><input type="number" step="0.01" id="areaAtivar"></div>
-                <div><label>Número do contrato</label><input id="numContrato"></div><div><label>Data de vencimento do contrato</label><input type="date" id="dataVencimento"></div>
+      case "Area de Danos":
+        return `<div><label>Codigo Fundo Agricola</label><input id="fundoDanos"></div><div><label>Zona</label><input id="zonaDanos"></div>
+                <div><label>Talhao</label><input id="talhaoDanos"></div><div><label>Tipo de danos</label><textarea rows="2" id="tipoDanosDesc"></textarea></div>`;
+      case "Ativar/Inativar Talhao":
+        return `<div class="row-2"><div><label>Codigo Fazenda</label><input id="codFazendaAtivar"></div><div><label>Zona</label><input id="zonaAtivar"></div></div>
+                <div><label>Talhao</label><input id="talhaoAtivar"></div><div><label>Area (ha)</label><input type="number" step="0.01" id="areaAtivar"></div>
+                <div><label>Numero do contrato</label><input id="numContrato"></div><div><label>Data de vencimento do contrato</label><input type="date" id="dataVencimento"></div>
                 <div><label>Impacto na safra</label><select id="impactoSafra"><option>Safra atual</option><option>Safra atual + futura</option><option>Safra futura</option></select></div>`;
-      case "Danos Talhão Permanente":
-        return `<div class="row-2"><div><label>Fundo agrícola</label><input id="fundoDanoPerm"></div><div><label>Zona</label><input id="zonaDanoPerm"></div></div>
-                <div><label>Talhão</label><input id="talhaoDanoPerm"></div><div class="row-2"><div><label>Área de danos</label><input id="areaDanosHa"></div><div><label>Área de produção</label><input id="areaProducaoHa"></div></div>
-                <div><label>Grupo dano</label><input id="grupoDano"></div><div><label>Descrição</label><textarea rows="2" id="descricaoDano"></textarea></div>
-                <div><label>Motivo dano</label><input id="motivoDano"></div><div><label>Observação</label><textarea id="obsDanoPerm" rows="2"></textarea></div>`;
+      case "Danos Talhao Permanente":
+        return `<div class="row-2"><div><label>Fundo agricola</label><input id="fundoDanoPerm"></div><div><label>Zona</label><input id="zonaDanoPerm"></div></div>
+                <div><label>Talhao</label><input id="talhaoDanoPerm"></div><div class="row-2"><div><label>Area de danos</label><input id="areaDanosHa"></div><div><label>Area de producao</label><input id="areaProducaoHa"></div></div>
+                <div><label>Grupo dano</label><input id="grupoDano"></div><div><label>Descricao</label><textarea rows="2" id="descricaoDano"></textarea></div>
+                <div><label>Motivo dano</label><input id="motivoDano"></div><div><label>Observacao</label><textarea id="obsDanoPerm" rows="2"></textarea></div>`;
       case "Informar Data de Reforma":
         return `<div class="row-2"><div><label>Fundo</label><input id="fundoReforma"></div><div><label>Zona</label><input id="zonaReforma"></div></div>
-                <div><label>Talhão</label><input id="talhaoReforma"></div><div><label>Tipo de plantio</label><select id="tipoPlantioReforma"><option>Cana planta</option><option>Soca</option></select></div>
-                <div><label>Variedade</label><input id="variedadeReforma"></div><div><label>Espaçamento</label><input id="espacamentoReforma"></div><div><label>Data de reforma</label><input type="date" id="dataReforma"></div>`;
-      case "Reversão de Ordem de Corte":
-        return `<div><label>Nº Ordem de Corte</label><input id="numOrdemRev"></div><div><label>Código do fundo</label><input id="fundoRev"></div>
-                <div class="row-2"><div><label>Zona</label><input id="zonaRev"></div><div><label>Nº talhão</label><input id="talhaoRev"></div></div>
-                <div><label>Motivo da reversão</label><textarea rows="2" id="motivoReversao"></textarea></div>`;
-      case "Pós Plantio":
-        return `<div><label>Unidade produtora</label><input id="unidadeProdutora"></div><div><label>Código fazenda</label><input id="codFazendaPos"></div>
-                <div class="row-2"><div><label>Código zona</label><input id="zonaPos"></div><div><label>Talhão</label><input id="talhaoPos"></div></div>
-                <div><label>Tipo Gestão</label><select id="tipoGestao"><option>FOCA</option><option>Repasse</option></select></div>`;
+                <div><label>Talhao</label><input id="talhaoReforma"></div><div><label>Tipo de plantio</label><select id="tipoPlantioReforma"><option>Cana planta</option><option>Soca</option></select></div>
+                <div><label>Variedade</label><input id="variedadeReforma"></div><div><label>Espacamento</label><input id="espacamentoReforma"></div><div><label>Data de reforma</label><input type="date" id="dataReforma"></div>`;
+      case "Reversao de Ordem de Corte":
+        return `<div><label>Nº Ordem de Corte</label><input id="numOrdemRev"></div><div><label>Codigo do fundo</label><input id="fundoRev"></div>
+                <div class="row-2"><div><label>Zona</label><input id="zonaRev"></div><div><label>Nº talhao</label><input id="talhaoRev"></div></div>
+                <div><label>Motivo da reversao</label><textarea rows="2" id="motivoReversao"></textarea></div>`;
+      case "Pos Plantio":
+        return `<div><label>Unidade produtora</label><input id="unidadeProdutora"></div><div><label>Codigo fazenda</label><input id="codFazendaPos"></div>
+                <div class="row-2"><div><label>Codigo zona</label><input id="zonaPos"></div><div><label>Talhao</label><input id="talhaoPos"></div></div>
+                <div><label>Tipo Gestao</label><select id="tipoGestao"><option>FOCA</option><option>Repasse</option></select></div>`;
       case "Plantio":
         return `<div><label>Fazenda</label><input id="fazendaPlantio"></div><div><label>Sistema de plantio</label><input id="sistemaPlantio"></div>
-                <div class="row-2"><div><label>Espaçamento</label><input id="espacamentoPlantio"></div><div><label>Ciclo desenvolvimento</label><input id="cicloPlantio"></div></div>
+                <div class="row-2"><div><label>Espacamento</label><input id="espacamentoPlantio"></div><div><label>Ciclo desenvolvimento</label><input id="cicloPlantio"></div></div>
                 <div class="row-2"><div><label>Zona</label><input id="zonaPlantio"></div><div><label>Variedade</label><input id="variedadePlantio"></div></div>
-                <div class="row-2"><div><label>Talhão</label><input id="talhaoPlantio"></div><div><label>Área (ha)</label><input type="number" step="0.1" id="areaHaPlantio"></div></div>
+                <div class="row-2"><div><label>Talhao</label><input id="talhaoPlantio"></div><div><label>Area (ha)</label><input type="number" step="0.1" id="areaHaPlantio"></div></div>
                 <div class="row-2"><div><label>Frente</label><input id="frentePlantio"></div><div><label>Quantidade de pessoas</label><input type="number" id="qtdPessoasPlantio"></div></div>
-                <div><label>Área restante (ha)</label><input type="number" step="0.1" id="areaRestantePlantio"></div>`;
-      default: return `<p>Formulário não disponível</p>`;
+                <div><label>Area restante (ha)</label><input type="number" step="0.1" id="areaRestantePlantio"></div>`;
+      default: return `<p>Formulario nao disponivel</p>`;
     }
   }
 
-  // Coleta todos os dados dos campos do form atual
   function collectFormData() {
     const fields = document.querySelectorAll('#formFieldsArea input, #formFieldsArea select, #formFieldsArea textarea');
     let dataObj = {};
@@ -432,7 +428,6 @@
     return dataObj;
   }
 
-  // Preenche formulário a partir de um rascunho salvo
   function restoreDraftToForm(draft) {
     if(!draft || draft.tipo !== currentTicketType) return false;
     const dados = draft.dados;
@@ -440,7 +435,7 @@
       const inputEl = document.getElementById(key);
       if(inputEl) inputEl.value = value;
     }
-    showToast("Rascunho carregado automaticamente ✔️");
+    showToast("Rascunho carregado automaticamente");
     return true;
   }
 
@@ -467,17 +462,21 @@
     }
   }
 
-  // Montar mensagem WhatsApp a partir dos dados
+  // Montar mensagem WhatsApp a partir dos dados - SEM EMOJIS, apenas texto puro
   function generateWhatsAppMessage() {
     const formData = collectFormData();
-    let msg = `🍃 *CHAMADO AGRÍCOLA: ${currentTicketType}*%0A%0A`;
+    let msg = "*CHAMADO AGRICOLA: " + currentTicketType + "*%0A%0A";
+    
     for(let [key, value] of Object.entries(formData)) {
       if(value && value.trim() !== "") {
         let label = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()).replace(/Id/g, 'ID');
-        msg += `📌 *${label}:* ${value.trim()}%0A`;
+        label = label.replace(/([a-z])([A-Z])/g, '$1 $2');
+        msg += "> " + label + ": " + value.trim() + "%0A";
       }
     }
-    msg += `%0A📅 Enviado via Agro-Chamados - Gestão Agrícola`;
+    
+    msg += "%0A---%0A";
+    msg += "Enviado via Agro-Chamados - Gestao Agricola";
     return msg;
   }
 
@@ -497,7 +496,7 @@
     }, 300);
   }
 
-  // ========== NAVEGAÇÃO E RENDER ==========
+  // ========== NAVEGACAO E RENDER ==========
   function renderTypeSelection() {
     typesContainer.innerHTML = "";
     tiposChamado.forEach(tipo => {
@@ -505,14 +504,14 @@
       card.className = 'type-card';
       let iconHtml = '<i class="fas fa-clipboard-list"></i>';
       if(tipo.includes("Fechamento")) iconHtml = '<i class="fas fa-cut"></i>';
-      else if(tipo.includes("Ocupação")) iconHtml = '<i class="fas fa-exchange-alt"></i>';
+      else if(tipo.includes("Ocupacao")) iconHtml = '<i class="fas fa-exchange-alt"></i>';
       else if(tipo.includes("Propriedade")) iconHtml = '<i class="fas fa-building"></i>';
-      else if(tipo.includes("Danos")) iconHtml = '<i class="fas fa-tree"></i>';
+      else if(tipo.includes("Area")) iconHtml = '<i class="fas fa-tree"></i>';
       else if(tipo.includes("Ativar")) iconHtml = '<i class="fas fa-toggle-on"></i>';
-      else if(tipo.includes("Permanente")) iconHtml = '<i class="fas fa-exclamation-triangle"></i>';
+      else if(tipo.includes("Danos")) iconHtml = '<i class="fas fa-exclamation-triangle"></i>';
       else if(tipo.includes("Reforma")) iconHtml = '<i class="fas fa-calendar-alt"></i>';
-      else if(tipo.includes("Reversão")) iconHtml = '<i class="fas fa-undo-alt"></i>';
-      else if(tipo.includes("Pós Plantio")) iconHtml = '<i class="fas fa-seedling"></i>';
+      else if(tipo.includes("Reversao")) iconHtml = '<i class="fas fa-undo-alt"></i>';
+      else if(tipo.includes("Pos Plantio")) iconHtml = '<i class="fas fa-seedling"></i>';
       else if(tipo.includes("Plantio")) iconHtml = '<i class="fas fa-tractor"></i>';
       card.innerHTML = `${iconHtml}<span>${tipo}</span>`;
       card.addEventListener('click', () => openFormForType(tipo));
@@ -525,11 +524,9 @@
     formDynamicTitle.innerText = type;
     const formHtml = getFormHtmlByType(type);
     formFieldsArea.innerHTML = formHtml;
-    // alterna telas
     homeScreen.classList.add('hidden');
     typeScreen.classList.add('hidden');
     formScreen.classList.remove('hidden');
-    // tenta carregar rascunho compatível
     tryLoadDraftOnEnter();
   }
 
@@ -550,15 +547,14 @@
   // EVENTOS PRINCIPAIS
   document.getElementById('newChamadoBtn').addEventListener('click', goToTypeSelection);
   document.getElementById('infoAppBtn').addEventListener('click', () => {
-    showToast("Sistema AgroChamados - versão 2.0 · Envio direto WhatsApp");
-    alert("AgroChamados Profissional\nConfigure o número do estagiário no código (NUMERO_ESTAGIARIO).\nPara GitHub Pages: use apenas este arquivo.");
+    showToast("Sistema AgroChamados - versao 2.0 · Envio direto WhatsApp");
+    alert("AgroChamados Profissional\nConfigure o numero do estagiario no codigo (NUMERO_ESTAGIARIO).\nPara GitHub Pages: use apenas este arquivo.");
   });
   document.getElementById('backHomeFromType').addEventListener('click', goToHome);
   document.getElementById('backToType').addEventListener('click', goToTypeSelection);
   submitBtn.addEventListener('click', handleSubmit);
   saveDraftBtn.addEventListener('click', saveCurrentDraft);
 
-  // Inicializa lista de tipos já no inicio para performance
   renderTypeSelection();
 </script>
 </body>
